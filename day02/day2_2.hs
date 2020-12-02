@@ -18,15 +18,15 @@ getConstraintSymbol :: String -> Char
 getConstraintSymbol str = head str
 
 getConstraintRange :: String -> (Int, Int)
-getConstraintRange str = (read head :: Int, read tail :: Int)
-                        where head:tail:xs = splitOn "-" str
+getConstraintRange str = (read hd :: Int, read tl :: Int)
+                        where hd:tl:_ = splitOn "-" str
 
 parseLine :: String -> ParsedLine
 parseLine line = ParsedLine { constraintRange = getConstraintRange first
                             , constraintSymbol = getConstraintSymbol second
                             , password         = third
                             }
-                 where first:second:third:ns = words line
+                 where first:second:third:_ = words line
 
 isValidPass :: ParsedLine -> Bool
 isValidPass pl = xor ((password pl) !! ((fst (constraintRange pl)) - 1) == constraintSymbol pl)
